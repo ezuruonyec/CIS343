@@ -71,8 +71,8 @@ class Paddle(pg.sprite.Sprite):
         """
         keys = pg.key.get_pressed()
 
-        self.rect.x += (keys[pygame.K_RIGHT] - keys[pg.K_LEFT]) * 5
-        self.rect.y += (keys[pygame.K_LEFT] - keys[pg.K_RIGHT]) * 5
+        self.rect.x += (keys[pg.K_RIGHT] - keys[pg.K_LEFT]) * 5
+        self.rect.y += (keys[pg.K_LEFT] - keys[pg.K_RIGHT]) * 5
 
         if self.rect.x > 550:
             self.rect.x = 545
@@ -95,21 +95,15 @@ class Blah(pg.sprite.Sprite):
 #        self.boom = pg.mixer.Sound("./boom.mp3")
 
     def update(self):
-        self.rect.x += self.velocity[0]
-        self.rect.y += self.velocity[1]
+        keys = pg.key.get_pressed()
+
+        self.rect.x += (keys[pg.K_RIGHT] - keys[pg.K_LEFT]) * 5
+        self.rect.y += (keys[pg.K_LEFT] - keys[pg.K_RIGHT]) * 5
+
+        if self.rect.x > 550:
+            self.rect.x = 545
         if self.rect.x < 0:
-            self.velocity[0] = -self.velocity[0]
-        if self.rect.x > 800:
-            self.velocity[0] = -self.velocity[0]
-        if self.rect.y < 0:
-            self.velocity[1] = -self.velocity[1]
-        if self.rect.y > 600:
-            self.velocity[1] = -self.velocity[1]
-        collisions = pg.sprite.spritecollide(self, Blah.explodifiers, False)
-        if collisions:
-            self.velocity[0] = 0
-            self.velocity[1] = 0
-            self.rect.x = -100
+            self.rect.x = 5
 #         self.boom.play()
 
     def setExplodifiers(self, explodifiers):
@@ -141,7 +135,7 @@ class Game:
 
             # Update updateable objects
             self.blahs.update()
-            self.paddles.move()
+            # self.paddles.move()
             # Redraw
             self.screen.fill( (255, 255, 255) )
             self.blahs.draw(self.screen)
